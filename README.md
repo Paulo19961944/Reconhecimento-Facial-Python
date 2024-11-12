@@ -14,8 +14,8 @@ Esse é um código de reconhecimento de faciais com Python. Ele é baseado na Bi
 
 1. Certifique-se que tenha o Python instalado em sua máquina
 2. Verifique as variáveis de ambiente
-3. Dê o comando ```bash git clone https://github.com/Paulo19961944/Reconhecimento-Facial-Python/```
-4. Dê o comando ```bash python main.py```
+3. Dê o comando ```git clone https://github.com/Paulo19961944/Reconhecimento-Facial-Python/```
+4. Dê o comando ```python main.py```
 5. Espere até abrir a camera de seu computador
 6. Digite ESC para sair
 
