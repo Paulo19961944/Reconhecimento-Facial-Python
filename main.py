@@ -1,29 +1,35 @@
 import cv2
-import mediapipe as mp
 
-# Inicializar o opencv e o mediapipe
+# Carregar classificador de rosto
+face_cascade = cv2.CascadeClassifier(
+    cv2.data.haarcascades + "haarcascade_frontalface_default.xml"
+)
+
+# Webcam
 webcam = cv2.VideoCapture(0)
-solucao_reconhecimento_rosto = mp.solutions.face_detection
-reconhecer_rostos = solucao_reconhecimento_rosto.FaceDetection()
-desenho = mp.solutions.drawing_utils
 
 while True:
-    # Ler as informações da webcam
-    verificador, frame = webcam.read()
-    if not verificador:
+    ret, frame = webcam.read()
+    if not ret:
         break
 
-    # Reconhecer os rostos
-    lista_rostos = reconhecer_rostos.process(frame)
+    gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
-    if lista_rostos.detections:
-        for rosto in lista_rostos.detections:
-            desenho.draw_detection(frame, rosto)
+    # Detectar rostos
+    faces = face_cascade.detectMultiScale(
+        gray,
+        scaleFactor=1.2,
+        minNeighbors=5,
+        minSize=(60, 60)
+    )
 
-    cv2.imshow("Rostos na Webcam", frame)
+    # Desenhar os rostos
+    for (x, y, w, h) in faces:
+        cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
 
-    # Quando apertar o ESC para o loop
-    if cv2.waitKey(5) == 27:
+    cv2.imshow("Reconhecimento Facial Simples", frame)
+
+    if cv2.waitKey(1) & 0xFF == 27:  # ESC
         break
 
 webcam.release()
